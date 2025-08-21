@@ -112,7 +112,7 @@ WELHOME/
 ---
 
 ## 🧪 Fine‑tuning (LoRA) — HyperCLOVAX‑SEED‑1.5B
-> 목적: **정책·용어**와 같은 안정된 지식을 **간결·정확**하게 답하도록 미세조정
+> 목적: **정책·용어**와 같은 안정된 지식을 **정확**하게 답하도록 미세조정
 
 ### 1) 데이터 포맷
 - 파일: `fine/fine_data.json`
@@ -163,9 +163,9 @@ python fine/fine_tuning.py \
 ### 1) 사전 준비
 - **Python 3.10+**, (권장) CUDA 가능 환경
 - **Poppler** 설치(pdf → png 변환)  
-  - macOS: `brew install poppler`  
-  - Ubuntu: `apt-get install -y poppler-utils`
-- **Ollama** 설치 (에이전트 LLM: `exaone3.5:7.8b`)
+  - macOS: brew install poppler
+  - Ubuntu: apt-get install -y poppler-utils
+- **Hugging Face Transformers (LLM: exaone3.5:7.8b)
 - **SQLite/Chroma** 경로 및 `static/{PAN_ID}.pdf` 배치
 
 ### 2) 의존성
@@ -178,8 +178,7 @@ pip install fastapi uvicorn jinja2 pydantic httpx pdf2image \
 ### 3) 환경 변수 (.env 예시)
 ```dotenv
 # 에이전트 LLM (exaone3.5:7.8b)
-OLLAMA_HOST=http://localhost:11434
-AGENT_MODEL=exaone3.5:7.8b
+AGENT_MODEL=naver-ai/exaone3.5-7.8b
 
 # Q&A 모델 (HyperCLOVAX + LoRA)
 BASE_MODEL=naver-hyperclovax/HyperCLOVAX-SEED-Text-Instruct-1.5B
