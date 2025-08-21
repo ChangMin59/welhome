@@ -29,14 +29,14 @@
 ## 📊 아키텍처 다이어그램
 ```mermaid
 flowchart TD
-    A[사용자 입력] --> B[Intent Router]
-    B -->|주택| C["Housing Agent (EXAONE)<br/>SQLite + LH API + RAG(Chroma)"]
-    B -->|대출| D["Loan Agent (EXAONE)<br/>SQLite + 상환액 계산"]
+    A["사용자 입력"] --> B["Intent Router"]
+    B -->|주택| C["Housing Agent (EXAONE)\nSQLite + LH API + RAG(Chroma)"]
+    B -->|대출| D["Loan Agent (EXAONE)\nSQLite + 상환액 계산"]
     A -->|용어·정책 Q&A| E["Fine-tuned Model (HyperCLOVAX + LoRA)"]
-    C --> F[응답 생성(HTML/Markdown)]
+    C --> F["응답 생성 (HTML/Markdown)"]
     D --> F
     E --> F
-    F --> G["프론트엔드 UI 출력<br/>(chat.html / qna.html)"]
+    F --> G["프론트엔드 UI 출력\n(chat.html / qna.html)"]
 ```
 
 ### 요청–응답 시퀀스(요약)
