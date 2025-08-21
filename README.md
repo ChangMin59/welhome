@@ -143,7 +143,7 @@ FastAPI 서버가 실행되며, 브라우저에서 `http://localhost:8000` 접�
 ```mermaid
 flowchart TD
     A[사용자 입력] --> B[Intent Router]
-    B -->|청약| C[Housing Agent → LH API]
+    B -->|청약(QnA)| C[QnA Chatbot → LH API + FAQ DB]
     B -->|대출| D[Loan Agent → Loan Calculator + VectorDB]
     B -->|용어 설명| E[Fine-tuned Model → FAQ 응답]
     C --> F[응답 생성]
