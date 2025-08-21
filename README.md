@@ -88,8 +88,8 @@ WELHOME/
 │   ├── region_map.py       # 지역코드 매핑
 │   └── vectordb_search.py  # Chroma 검색
 ├── templates/              # UI
-│   ├── index.html          # 랜딩/FAQ
-│   ├── chat.html           # 상담 UI(+PDF 네비)
+│   ├── index.html          # 메인 페이지
+│   ├── chat.html           # 주택,대출 페이지
 │   └── qna.html            # LoRA Q&A
 ├── scss/
 │   ├── style.scss
