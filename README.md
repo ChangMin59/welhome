@@ -145,7 +145,7 @@ flowchart TD
     A[사용자 입력] --> B[Intent Router]
     B -->|주택| C[Housing Agent → SQLite DB + LH API]
     B -->|대출| D[Loan Agent → SQLite DB + 상환액 계산]
-    B -->|용어 설명| E[Fine-tuned Model → LLM 응답]
+    A -->|용어 설명| E[Fine-tuned Model → LLM 응답]
     C --> F[추천 결과 응답 생성]
     D --> F
     E --> F
