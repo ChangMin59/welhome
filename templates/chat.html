@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>추천 챗봇</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f1f3f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    h2 { color: #4a4a4a; font-size: 24px; margin-top: 20px; }
+    #chatbox {
+      width: 90%;
+      max-width: 1000px;
+      height: 500px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .user-message, .bot-message {
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      max-width: 90%;
+    }
+    .user-message {
+      background-color: #e0e0e0;
+      align-self: flex-end;
+    }
+    .bot-message {
+      background-color: #f2f2f2;
+      align-self: flex-start;
+    }
+    .input-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 90%;
+      max-width: 600px;
+      margin-top: 10px;
+    }
+    #userInput {
+      width: calc(100% - 110px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .nav-buttons {
+      margin-top: 10px;
+    }
+    .nav-buttons button {
+      margin-right: 10px;
+    }
+    @media screen and (max-width: 768px) {
+      #chatbox { width: 95%; height: 400px; }
+      button { width: 100%; margin-top: 10px; }
+      #userInput { width: 100%; margin-right: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <h2>
+    <a href="/" style="text-decoration: none; color: inherit;">
+      🏠 주택 & 대출 추천 도우미
+    </a>
+  </h2>
+  <div id="chatbox"></div>
+
+  <div class="input-container">
+    <input id="userInput" type="text" placeholder="메시지를 입력하세요" onkeydown="if(event.key==='Enter') sendMessage()"/>
+    <button onclick="sendMessage()">전송</button>
+  </div>
+
+  <script>
+    let conversationState = {};
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const chatbox = document.getElementById("chatbox");
+      const welcomeMsg = document.createElement("div");
+      welcomeMsg.classList.add("bot-message");
+      welcomeMsg.innerHTML = `<b>🤖 챗봇:</b> 안녕하세요! 주거와 대출에 대해 도와드릴 챗봇입니다.<br> 주거/대출 어떤걸 추천해드릴까요?`;
+      chatbox.appendChild(welcomeMsg);
+    });
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      const chatbox = document.getElementById("chatbox");
+      if (!message) return;
+
+      chatbox.innerHTML += `<div class="user-message"><b>👤 나:</b> ${message}</div>`;
+      input.value = "";
+      input.disabled = true;
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: message, state: conversationState })
+        });
+
+        const data = await response.json();
+        const result = data.result;
+        const state = data.state;
+        conversationState = state;
+
+        // 일반 챗봇 응답 메시지 추가
+        chatbox.innerHTML += `<div class="bot-message"><b>🤖 챗봇:</b> ${result}</div>`;
+
+        // 기존 페이지 이미지 블록 제거
+        const existingPageBlock = document.querySelector(".bot-message.page-image");
+        if (existingPageBlock) {
+          existingPageBlock.remove();
+        }
+
+        if (state.notice_id && state.current_page) {
+          const page = state.current_page;
+          const imageUrl = `/static/pages/page_${page}.png?t=${Date.now()}`;
+
+          const newBlock = document.createElement("div");
+          newBlock.className = "bot-message page-image";
+          newBlock.innerHTML = `
+            <b>🤖 챗봇:</b> (페이지 ${page})<br><br>
+            <div class="nav-buttons">
+              <button onclick="navigatePage(-1)">⬅ 이전</button>
+              <button onclick="navigatePage(1)">다음 ➡</button>
+            </div>
+            <a href="${imageUrl}" target="_blank">
+              <img src="${imageUrl}" style="max-width: 500px; border-radius: 6px; border: 1px solid #ccc;">
+            </a>
+          `;
+          chatbox.appendChild(newBlock);
+        }
+
+        chatbox.scrollTop = chatbox.scrollHeight;
+
+      } catch (error) {
+        chatbox.innerHTML += `<div style="color:red;"><b>❌ 오류가 발생했습니다.</b></div>`;
+        console.error(error);
+      } finally {
+        input.disabled = false;
+        input.focus();
+      }
+    }
+
+    async function navigatePage(offset) {
+      if (!conversationState.notice_id || conversationState.current_page === undefined) return;
+
+      const newPage = conversationState.current_page + offset;
+      if (newPage <= 0) return;
+
+      const chatbox = document.getElementById("chatbox");
+
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: `페이지 ${newPage}`,
+          state: conversationState
+        })
+      });
+
+      const data = await response.json();
+      conversationState = data.state;
+
+      // 기존 페이지 이미지 블록 제거
+      const existingPageBlock = document.querySelector(".bot-message.page-image");
+      if (existingPageBlock) {
+        existingPageBlock.remove();
+      }
+
+      const imageUrl = `/static/pages/page_${newPage}.png?t=${Date.now()}`;
+      const newBlock = document.createElement("div");
+      newBlock.className = "bot-message page-image";
+      newBlock.innerHTML = `
+        <b>🤖 챗봇:</b> (페이지 ${newPage})<br><br>
+        <div class="nav-buttons">
+          <button onclick="navigatePage(-1)">⬅ 이전</button>
+          <button onclick="navigatePage(1)">다음 ➡</button>
+        </div>
+        <a href="${imageUrl}" target="_blank">
+          <img src="${imageUrl}" style="max-width: 500px; border-radius: 6px; border: 1px solid #ccc;">
+        </a>
+      `;
+      chatbox.appendChild(newBlock);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  </script>
+</body>
+</html>

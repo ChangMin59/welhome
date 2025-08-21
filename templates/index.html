@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>내 집 마련 - Wel home</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  <script src="https://kit.fontawesome.com/1ee3d86214.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script defer src="/static/js/ie.js"></script>
+  <script defer src="/static/js/main.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .button-area {
+      padding: 2rem;
+    }
+
+    .button-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .faq-box {
+      flex: 1;
+      background-color: #f4f4f4;
+      padding: 2rem;
+      border-radius: 15px;
+      height: 500px;
+      width: 320px;
+    }
+
+    .faq-box h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .faq-box ul {
+      list-style-type: disc;
+      padding-left: 1.2rem;
+    }
+
+    .faq-box li {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .button-section {
+      display: flex;
+      flex-direction: row;  /* ✅ row로 변경 */
+      gap: 2rem;
+      justify-content: flex-end;  /* ✅ 우측 정렬 */
+    }
+
+
+    .big-button {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+      width: 320px;
+      height: 500px;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #000;
+      font-family: "Orbitron", sans-serif;
+      text-align: center;
+      transition: filter 0.3s ease;
+    }
+
+    .button-blue {
+      background-color: #c3e9fa;
+    }
+
+    .button-green {
+      background-color: #E3F9F1;
+    }
+
+    .button-blue:hover,
+    .button-green:hover {
+      filter: brightness(0.95);
+    }
+
+    .btn-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .btn-desc {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .btn-img {
+      width: 60%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .btn-img-house {
+      width: 100%;
+    }
+
+    .btn-img-qna {
+      margin-bottom: 3.8rem;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 2rem;
+    }
+
+    footer h1 {
+      font-size: 1.5rem;
+    }
+
+    footer address {
+      font-style: normal;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    .inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .faq-answer {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.3rem;
+
+      line-height: 1.4;
+    }
+.faq-box li,
+.faq-box .faq-answer {
+  font-family: "맑은 고딕", Malgun Gothic, sans-serif;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="inner">
+      <h1><a href="#">Wel Home</a></h1>
+      <ul id="gnb">
+        <li><a href="#">공지사항</a></li>
+        <li><a href="https://apply.lh.or.kr/lhapply/apply/sc/list.do?mi=1312">공고달력보기</a></li>
+        <li><a href="#">용어사전</a></li>
+        <li><a href="#">고객센터</a></li>
+      </ul>
+      <ul class="util">
+        <li><a href="#">로그인</a></li>
+        <li><a href="#">회원가입</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="button-area">
+    <div class="button-wrapper">
+
+      <!-- ✅ 왼쪽 FAQ -->
+      <div class="faq-box">
+        <h2>자주 묻는 질문</h2>
+ <ul>
+    <li>
+      임대주택 신청 조건은 어떻게 되나요?
+      <div class="faq-answer">▶ 무주택 세대주이며 소득 및 자산 요건을 충족해야 합니다.</div>
+    </li>
+    <li>
+      대출 상담은 어떻게 진행되나요?
+      <div class="faq-answer">▶ 상담 신청 후 전문 상담원이 순차적으로 연락드립니다.</div>
+    </li>
+    <li>
+      공고 확인은 어디서 하나요?
+      <div class="faq-answer">▶ LH청약센터 사이트 또는 공고달력 페이지에서 확인 가능합니다.</div>
+    </li>
+    <li>
+      Q&A 답변은 얼마나 걸리나요?
+      <div class="faq-answer">▶ 채팅 봇에서 즉시 3분안에 빠르게 확인이 가능합니다.</div>
+    </li>
+    <li>
+      상담 시간은 언제인가요?
+      <div class="faq-answer">▶ 평일 주말 상관 없이 24시간 운영됩니다.</div>
+    </li>
+  </ul>
+  <!-- ✅ LH청약 부동산맵 버튼 추가 -->
+<div style="margin-top: 1.5rem;">
+  <a href="https://apply.lh.or.kr/lhapply/land/main.do" target="_blank"
+     style="display:block; width: 100%; padding: 1rem; background-color: #4DB8FF;
+            color: white; border-radius: 12px; text-decoration: none; font-weight: bold;
+              font-family: '맑은 고딕', Malgun Gothic, sans-serif; text-align: center; font-size: 1rem;">
+    🔍 LH청약 부동산맵 바로가기
+  </a>
+</div>
+
+      </div>
+
+      <!-- ✅ 오른쪽 버튼들 -->
+      <div class="button-section">
+        <a href="/chat" class="big-button button-blue">
+          <div class="btn-title">주택/대출 상담</div>
+          <div class="btn-desc">간단한 입력으로 임대주택과<br>자금마련을 알아보세요!</div>
+          <img src="/static/House.png" alt="대출상담" class="btn-img btn-img-house" />
+        </a>
+
+        <a href="/qna" class="big-button button-green">
+          <div class="btn-title">Q & A</div>
+          <div class="btn-desc">사용법과 궁금한 내용을<br>물어보세요!</div>
+          <img src="/static/QNA.png" alt="QnA" class="btn-img btn-img-qna" />
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="inner">
+      <div class="upper"><h1>Wel Home</h1></div>
+      <div class="lower">
+        <address>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, facilis! <br />
+          TEL : 000-1234-1234 C.P : 010-1234-1234
+        </address>
+        <p>2025 Wel Home &copy; copyright all rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
