@@ -143,10 +143,10 @@ FastAPI 서버가 실행되며, 브라우저에서 `http://localhost:8000` 접�
 ```mermaid
 flowchart TD
     A[사용자 입력] --> B[Intent Router]
-    B -->|주택 청약| C[Housing Agent → SQLite 조건검색]
-    B -->|대출| D[Loan Agent → SQLite 조건검색 + Loan Calculator]
-    A -->|용어 설명/FAQ| E[Fine-tuned Model → FAQ 응답]
-    C --> F[응답 생성]
+    B -->|주택| C[Housing Agent → SQLite DB + LH API]
+    B -->|대출| D[Loan Agent → SQLite DB + 상환액 계산]
+    B -->|용어 설명| E[Fine-tuned Model → LLM 응답]
+    C --> F[추천 결과 응답 생성]
     D --> F
     E --> F
     F --> G[프론트엔드 UI 출력]
