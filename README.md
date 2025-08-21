@@ -9,14 +9,14 @@
 - **Agent 지향 설계**: 역할이 분리된 Agent가 **명시적 상태**로 협업하여 사용자 여정을 완결
 - **LangGraph(StateGraph)**: 대화 분기/재시작/종료를 **그래프 구조**로 선언해 디버깅·테스트 용이
 - **Fine‑tuning(LoRA)**: 정책·용어 Q&A의 응답 일관성과 정확도를 강화
-- **RAG(Vector DB)**: 공고 PDF **근거 스니펫**을 주입해 신뢰 가능한 답변 제공
+- **RAG(ChromaDB)**: 공고 PDF **근거 스니펫**을 주입해 신뢰 가능한 답변 제공
 - **단일 엔드포인트**: `/chat` 하나로 Intent→Agent 분기부터 PDF 페이지 이미지 내비까지 처리
 
 ---
 
 ## 🚀 주요 기능
 - **Intent Router**: 입력을 `housing(청약)` / `loan(대출)` 로 자동 분류 (한 단어 응답 유도)
-- **Housing Agent (EXAONE)**: 자격 수집 → **임대유형 추천** → **LH 공고 필터** → 선택 공고 **RAG**
+- **Housing Agent (EXAONE)**: 자격 수집 → **임대유형 추천(SQLite 조회)** → **LH 공고 필터** → 선택 공고 **RAG**
 - **Loan Agent (EXAONE)**: 금액/기간 입력 → SQLite 조회 → 상환유형별 **총 상환비용** 표/요약
 - **PDF 페이지 네비게이션**: “페이지 N” 입력 시 `static/{PAN_ID}.pdf` **N쪽 PNG** 렌더
 - **별도 Q&A**: `/qna` 는 **HyperCLOVAX + LoRA** 기반 **용어/정책** 질의응답
@@ -112,7 +112,7 @@ WELHOME/
 ---
 
 ## 🧪 Fine‑tuning (LoRA) — HyperCLOVAX‑SEED‑1.5B
-> 목적: **정책·용어**와 같은 안정된 지식을 **정확**하게 답하도록 미세조정
+> 목적: **정책·전문 용어** Q&A 챗봇 — 공공주택/금융 관련 전문 용어를 일상어로 풀어서 설명할 수 있도록 미세조정
 
 ### 1) 데이터 포맷
 - 파일: `fine/fine_data.json`
