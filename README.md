@@ -16,7 +16,7 @@
 
 ## 🚀 주요 기능
 - **Intent Router**: 입력을 `housing(청약)` / `loan(대출)` 로 자동 분류 (한 단어 응답 유도)
-- **Housing Agent (EXAONE)**: 자격 수집 → **임대유형 추천** → **LH 공고 필터** → 선택 공고 **RAG Q&A**
+- **Housing Agent (EXAONE)**: 자격 수집 → **임대유형 추천** → **LH 공고 필터** → 선택 공고 **RAG**
 - **Loan Agent (EXAONE)**: 금액/기간 입력 → SQLite 조회 → 상환유형별 **총 상환비용** 표/요약
 - **PDF 페이지 네비게이션**: “페이지 N” 입력 시 `static/{PAN_ID}.pdf` **N쪽 PNG** 렌더
 - **별도 Q&A**: `/qna` 는 **HyperCLOVAX + LoRA** 기반 **용어/정책** 질의응답
@@ -30,13 +30,13 @@
 ```mermaid
 flowchart TD
     A[사용자 입력] --> B[Intent Router]
-    B -->|주택| C[Housing Agent (EXAONE)\nSQLite + LH API + RAG(Chroma)]
-    B -->|대출| D[Loan Agent (EXAONE)\nSQLite + 상환액 계산]
-    A -->|용어·정책 Q&A| E[Fine‑tuned Model (HyperCLOVAX + LoRA)]
+    B -->|주택| C["Housing Agent (EXAONE)<br/>SQLite + LH API + RAG(Chroma)"]
+    B -->|대출| D["Loan Agent (EXAONE)<br/>SQLite + 상환액 계산"]
+    A -->|용어·정책 Q&A| E["Fine-tuned Model (HyperCLOVAX + LoRA)"]
     C --> F[응답 생성(HTML/Markdown)]
     D --> F
     E --> F
-    F --> G[프론트엔드 UI 출력 (chat.html / qna.html)]
+    F --> G["프론트엔드 UI 출력<br/>(chat.html / qna.html)"]
 ```
 
 ### 요청–응답 시퀀스(요약)
